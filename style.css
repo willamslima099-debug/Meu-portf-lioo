@@ -1,0 +1,602 @@
+html, body {
+    background-color: #050505; /* Cor idêntica à do navegador */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* Impede que a página "dance" para os lados */
+}
+
+/* Isso remove aquele brilho azul chato ao clicar em botões no celular */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Estilizando a barra de rolagem (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1e1b4b; /* Cor primária escura */
+    border-radius: 10px;
+    border: 2px solid #050505;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6366f1; /* Cor primária brilhante ao passar o mouse */
+}
+
+
+:root {
+    --bg: #050505;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --primary: #6366f1; /* Roxo moderno */
+    --secondary: #22d3ee; /* Ciano vibrante */
+    --text: #ffffff;
+    --text-dim: #a1a1aa;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+/* --- Navigation --- */
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 5%;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.logo { font-weight: 700; font-size: 1.5rem; letter-spacing: -1px; }
+.logo span { color: var(--primary); }
+.nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    margin-left: 2rem;
+    transition: 0.3s;
+    font-size: 0.9rem;
+}
+.nav-links a:hover { color: var(--text); }
+
+
+/* --- Unificando o Nome com o Estilo do Logo --- */
+.main-name {
+    font-size: clamp(3.5rem, 12vw, 7rem); /* Tamanho imponente */
+    font-weight: 700; /* Mesma espessura do logo */
+    letter-spacing: -2px;
+    margin-bottom: 0.5rem;
+    color: var(--text); /* Branco puro, igual ao logo */
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+/* O ponto no meio do nome com a cor do logo */
+.main-name span {
+    color: var(--primary); /* O mesmo roxo/azul do logo */
+}
+
+/* Ajuste do cargo logo abaixo para não ficar grudado */
+.hero-content .intro {
+    font-size: 1.1rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--secondary); /* Cor de destaque secundária */
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+
+.hero-content .intro {
+    font-size: 1.1rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--secondary);
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+.hero-content .sub-title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+/* Ajuste no Hero para comportar o nome maior */
+#hero {
+    min-height: 90vh; /* Em vez de 100vh fixo, 90vh ajuda a trazer o conteúdo de baixo mais para cima */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2rem; /* Espaço controlado antes de começar a próxima seção */
+}
+
+/*canvas */
+#background-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Garante que fique atrás de todo o conteúdo */
+    pointer-events: none; /* Permite que o mouse clique através do canvas */
+}
+
+/* --- Hero Section --- */
+#hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5%;
+    background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #050505 50%);
+}
+
+.hero-content { text-align: center; max-width: 800px; }
+
+.intro { color: var(--secondary); text-transform: uppercase; letter-spacing: 4px; font-size: 0.8rem; margin-bottom: 1rem; }
+
+h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); line-height: 1.1; margin-bottom: 1.5rem; }
+
+.gradient-text {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.description { color: var(--text-dim); font-size: 1.2rem; margin-bottom: 2rem; }
+
+/* --- Buttons --- */
+.btn {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+    display: inline-block;
+    margin: 0 10px;
+}
+.primary { background: var(--primary); color: white; }
+.primary:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
+.secondary { border: 1px solid rgba(255,255,255,0.1); color: white; }
+.secondary:hover { background: rgba(255,255,255,0.05); }
+
+/* --- Project Cards (Glassmorphism) --- */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 5%;
+}
+
+.card-glass {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 3rem 2rem;
+    border-radius: 24px;
+    backdrop-filter: blur(12px);
+    transition: 0.4s;
+}
+
+.card-glass:hover {
+    border-color: var(--secondary);
+    background: rgba(255,255,255,0.05);
+}
+
+/* --- Seção Habilidades --- */
+/* --- Seção Habilidades Atualizada --- */
+#habilidades {
+    padding: 40px 5% 80px 5%; /* Diminuí de 80px para 40px no topo */
+    text-align: center;
+}
+
+#habilidades .section-title {
+    margin-top: 0; /* Garante que não haja espaço sobrando acima */
+    margin-bottom: 2rem; /* Espaço entre o título e os cards */
+    font-size: 2.5rem;
+}
+
+section {
+    scroll-margin-top: 80px; /* Evita que o menu fixo cubra o título ao clicar no link */
+}
+
+
+.section-subtitle {
+    color: var(--text-dim);
+    margin-bottom: 3rem;
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.tech-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2.5rem 1.5rem;
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.tech-card img {
+    width: 60px;
+    height: 60px;
+    transition: transform 0.3s ease;
+}
+
+.tech-card h3 {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+.tech-card p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+}
+
+/* Efeito de hover dinâmico baseado na cor da tecnologia */
+.tech-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.tech-card:hover img {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* Cores de brilho específicas */
+.tech-card[data-color="python"]:hover { border-color: #3776ab; box-shadow: 0 10px 30px rgba(55, 118, 171, 0.2); }
+.tech-card[data-color="js"]:hover { border-color: #f7df1e; box-shadow: 0 10px 30px rgba(247, 223, 30, 0.2); }
+.tech-card[data-color="cpp"]:hover { border-color: #00599c; box-shadow: 0 10px 30px rgba(0, 89, 156, 0.2); }
+.tech-card[data-color="html"]:hover { border-color: #e34f26; box-shadow: 0 10px 30px rgba(227, 79, 38, 0.2); }
+.tech-card[data-color="css"]:hover { border-color: #1572b6; box-shadow: 0 10px 30px rgba(21, 114, 182, 0.2); }
+
+/* Classes para o efeito de Revelação */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Novo Rodapé (Footer) --- */
+#contato {
+    background: linear-gradient(to top, #0a0a1a, #050505);
+    padding: 100px 5% 40px 5%;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.footer-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.footer-subtitle {
+    color: var(--text-dim);
+    margin-top: 1rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 4rem;
+    margin-bottom: 5rem;
+}
+
+.footer-links h3 {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+}
+
+/* Reutilizando estilos de botões e inputs do contato anterior */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-dim);
+    font-size: 0.85rem;
+}
+
+.prisma-text {
+    margin-top: 0.5rem;
+    font-style: italic;
+    opacity: 0.6;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .social-item {
+        justify-content: center;
+    }
+    .contact-form .btn {
+        width: 100%;
+    }
+}
+
+/* --- Estilização Avançada do Contato/Rodapé --- */
+#contato {
+    background: #080808;
+    padding: 80px 5% 40px 5%;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-container { max-width: 1100px; margin: 0 auto; }
+
+.footer-header { text-align: center; margin-bottom: 3.5rem; }
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+/* Cards de Redes Sociais */
+.contact-info-column h3 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.contact-info-column p { color: var(--text-dim); margin-bottom: 2rem; }
+
+.social-links-container { display: flex; flex-direction: column; gap: 1rem; }
+
+.social-card {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 1.2rem;
+    border-radius: 16px;
+    text-decoration: none;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+
+.social-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--primary);
+    transform: translateX(8px);
+}
+
+.icon-bg {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-bg img { width: 24px; height: 24px; }
+
+.social-text span { display: block; font-weight: 700; font-size: 1rem; }
+.social-text small { color: var(--text-dim); }
+
+/* Formulário Moderno */
+.modern-form { display: flex; flex-direction: column; gap: 1rem; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.modern-form input, .modern-form textarea {
+    width: 100%;
+    padding: 1.2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    color: white;
+    font-family: inherit;
+    transition: 0.3s;
+}
+
+.modern-form input:focus, .modern-form textarea:focus {
+    border-color: var(--secondary);
+    background: rgba(255, 255, 255, 0.06);
+    outline: none;
+}
+
+.full-width { width: 100%; margin: 0; }
+
+.footer-bottom {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+.sincronia-tag { margin-top: 0.5rem; opacity: 0.5; font-style: italic; }
+
+/* Ajuste Responsivo */
+@media (max-width: 850px) {
+    .footer-content { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+}
+
+.main-name {
+    text-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+    animation: pulseGlow 4s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    from { text-shadow: 0 0 10px rgba(99, 102, 241, 0.2); }
+    to { text-shadow: 0 0 30px rgba(99, 102, 241, 0.5), 0 0 10px rgba(34, 211, 238, 0.3); }
+}
+
+
+/* --- Estilização dos 2 Cards de Habilidades --- */
+.skills-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.skill-group-card {
+    /* Base do Card */
+    background: rgba(255, 255, 255, 0.03); 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 3rem 2rem;
+    border-radius: 30px;
+    text-align: left;
+    
+    /* O SEGREDO DA IMERSÃO: Glassmorphism */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    /* PREPARAÇÃO PARA O EFEITO 3D (Tilt) */
+    transition: transform 0.2s ease-out, border-color 0.3s, box-shadow 0.3s;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.skill-group-card:hover {
+    /* No Hover, o card ganha mais vida */
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Faz com que o conteúdo dentro do card pareça flutuar (Efeito 3D) */
+.skill-group-card h3, 
+.skill-group-card p, 
+.tech-icons-row {
+    transform: translateZ(50px); /* Joga o texto "para fora" do card */
+}
+
+.skill-group-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--primary);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.skill-group-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.skill-group-card p {
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.tech-icons-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.tech-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tech-item img {
+    width: 40px;
+    height: 40px;
+    filter: grayscale(0.5);
+    transition: 0.3s;
+}
+
+.tech-item:hover img {
+    filter: grayscale(0);
+    transform: scale(1.1);
+}
+
+.tech-item span {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-weight: 600;
+}
+
+/* Destaque sutil para o card de Back-end */
+.highlight-border {
+    border-color: rgba(99, 102, 241, 0.2);
+}
+
+@media (max-width: 480px) {
+    .skills-wrapper {
+        grid-template-columns: 1fr;
+    }
+    .skill-group-card {
+        padding: 2rem 1.5rem;
+    }
+}
+
+/* Estilo do Easter Egg */
+#easter-egg-name {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ff69b4; /* Rosa Choque */
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    z-index: 10000; /* Fica acima de tudo, inclusive do cursor */
+    display: none; /* Escondido por padrão */
+    text-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+    pointer-events: none; /* Não atrapalha cliques se aparecer */
+}
+
+/* Deixa o W com cara de "clicável" apenas para você saber, 
+   ou deixe padrão para ser um segredo total */
+#secret-trigger {
+    cursor: pointer;
+}
